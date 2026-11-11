@@ -1,6 +1,12 @@
 <?php
-// Check if the button with name="my_button" was clicked
-//session_start
+/**
+ * @author Moisés Alberto Domínguez Cruz
+ * @since 11/11/2026
+ * Proyecto Tema 5 - LoginLogoff (Inicio Público)
+ */
+
+// session_start();
+
 if (isset($_REQUEST['login'])) {
     header("Location: codigoPHP/login.php");
     exit;
@@ -19,16 +25,52 @@ if (isset($_REQUEST['login'])) {
         <link rel="stylesheet" href="../webroot/css/styles.css">
         <link rel="stylesheet" href="webroot/css/estilos.css">
         <style>
-            .titulo-header{
+            .cabecera__contenedor {
+                max-width: none;
+                margin: 0;
+                justify-content: flex-start;
+                padding-left: 20px;
+            }
+
+            .titulo-header {
                 color: white;
+                text-align: left !important;
+                margin: 0;
             }
-            header{
-                text-align: left;
-                padding-left: 0; 
-            }
-            h2{
+
+            .container {
+                max-width: 900px;
+                margin: 30px auto;
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
                 text-align: center;
-                text-height: bold;
+            }
+
+            h2 {
+                color: #777bb4;
+                text-align: center;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 4px;
+                color: white;
+                font-size: 16px;
+                font-weight: bold;
+                border: none;
+                cursor: pointer;
+            }
+
+            .btn-ejecutar { 
+                background-color: #28a745; 
+            }
+            .btn-ejecutar:hover { 
+                opacity: 0.9; 
             }
         </style>
     </head>
@@ -45,10 +87,11 @@ if (isset($_REQUEST['login'])) {
                 
                 <h2>Inicio Publico</h2>
 
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-                    <input type="submit" name="login" id="login" value="Iniciar Sesion"/>
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                    <input type="submit" name="login" id="login" value="Iniciar Sesión" class="btn btn-ejecutar"/>
                 </form>
 
+                <img src="./webroot/images/modelo.png" alt="modelo de datos">
             </div>
         </main>
 
