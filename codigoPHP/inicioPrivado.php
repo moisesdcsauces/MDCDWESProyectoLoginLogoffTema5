@@ -125,7 +125,7 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">TEMA 5: LOGIN/LOGOFF (Inicio Privado)</h1>
+                <h1 class="titulo-header">Proyecto Login Logoff Tema 5 (Inicio Privado)</h1>
             </div>
         </header>
 
@@ -134,7 +134,7 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
 
                 <h2>Inicio Privado</h2>
 
-                <p class="bienvenida">Bienvenido/a <strong><?php echo htmlspecialchars($descUsuario); ?></strong></p>
+                <p class="bienvenida">Bienvenido/a <strong><?php echo $descUsuario; ?></strong></p>
 
                 <?php
                 // Si es la primera vez que se conecta no hay conexion anterior que mostrar
@@ -146,7 +146,7 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
                 }
                 ?>
 
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <input type="submit" name="detalle" value="Detalle" class="btn btn-detalle">
                     <input type="submit" name="cerrarSesion" value="Cerrar Sesión" class="btn btn-cerrar">
                 </form>

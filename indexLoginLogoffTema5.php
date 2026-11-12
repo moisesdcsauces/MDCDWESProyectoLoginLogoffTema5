@@ -4,7 +4,6 @@
  * @since 11/11/2026
  * Proyecto Tema 5 - LoginLogoff (Inicio Público)
  */
-
 // session_start();
 
 if (isset($_REQUEST['login'])) {
@@ -66,11 +65,11 @@ if (isset($_REQUEST['login'])) {
                 cursor: pointer;
             }
 
-            .btn-ejecutar { 
-                background-color: #28a745; 
+            .btn-ejecutar {
+                background-color: #28a745;
             }
-            .btn-ejecutar:hover { 
-                opacity: 0.9; 
+            .btn-ejecutar:hover {
+                opacity: 0.9;
             }
         </style>
     </head>
@@ -78,16 +77,16 @@ if (isset($_REQUEST['login'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">TEMA 5: LOGIN/LOGOFF</h1>
+                <h1 class="titulo-header">Proyecto Login Logoff Tema 5</h1>
             </div>
         </header>
 
         <main>
             <div class="container">
-                
+
                 <h2>Inicio Publico</h2>
 
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <input type="submit" name="login" id="login" value="Iniciar Sesión" class="btn btn-ejecutar"/>
                 </form>
 

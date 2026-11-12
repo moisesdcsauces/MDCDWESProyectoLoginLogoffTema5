@@ -152,35 +152,30 @@ if (isset($_REQUEST['volver'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">TEMA 5: LOGIN/LOGOFF (Detalle)</h1>
+                <h1 class="titulo-header">Proyecto Login Logoff Tema 5 (Detalle)</h1>
             </div>
         </header>
 
         <main>
             <div class="container">
 
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" style="margin-bottom: 20px;">
-                    <input type="submit" name="volver" value="⬅ Volver a Inicio Privado" class="btn btn-volver">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" style="margin-bottom: 20px;">
+                    <input type="submit" name="volver" value="⬅ Volver" class="btn btn-volver">
                 </form>
 
-                <?php
-                // PHPINFO()
-                echo "<h2>1. Informacion de phpinfo</h2>";
-                echo "<p>Mediante la función <code>phpinfo()</code> se obtiene informacion detallada sobre la configuracion actual de PHP en el servidor.</p>";
-                echo "<a href='?ver_phpinfo=1' target='_blank' class='btn-phpinfo'>Ejecutar y ver phpinfo() completo en nueva pestaña</a>";
-
+                <?php              
                 // RECORRIDO DE TODAS LAS SUPERGLOBALES CON FOREACH
                 echo "<h2>2. Recorrido de variables Superglobales</h2>";
 
                 // Array asociativo que agrupa todas las variables superglobales de PHP
                 $aSuperglobales = [
+                    '\$_SESSION' => $_SESSION,
+                    '\$_COOKIE'  => $_COOKIE,
                     '\$_SERVER'  => $_SERVER,
                     '\$_REQUEST' => $_REQUEST,
                     '\$_GET'     => $_GET,
                     '\$_POST'    => $_POST,
                     '\$_FILES'   => $_FILES,
-                    '\$_COOKIE'  => $_COOKIE,
-                    '\$_SESSION' => $_SESSION,
                     '\$_ENV'     => $_ENV
                 ];
 
@@ -194,12 +189,12 @@ if (isset($_REQUEST['volver'])) {
 
                         foreach ($arraySuperglobal as $nombre => $contenido) {
                             echo "<tr>";
-                            echo "<td style='width: 20%;'><strong>" . htmlspecialchars($nombre) . "</strong></td>";
+                            echo "<td style='width: 20%;'><strong>" . $nombre . "</strong></td>";
                             
                             if (is_array($contenido)) {
-                                echo "<td><pre>" . htmlspecialchars(print_r($contenido, true)) . "</pre></td>";
+                                echo "<td><pre>" . print_r($contenido, true) . "</pre></td>";
                             } else {
-                                echo "<td>" . htmlspecialchars((string)$contenido) . "</td>";
+                                echo "<td>" . (string)$contenido . "</td>";
                             }
                             
                             echo "</tr>";
@@ -209,6 +204,11 @@ if (isset($_REQUEST['volver'])) {
                         echo "<div class='vacio'>La variable $nombreSuperglobal está vacía en este momento.</div>";
                     }
                 }
+                
+                 // PHPINFO()
+                echo "<h2>Informacion de phpinfo</h2>";
+                echo "<p>Mediante la función <code>phpinfo()</code> se obtiene informacion detallada sobre la configuracion actual de PHP en el servidor.</p>";
+                echo "<a href='?ver_phpinfo=1' target='_blank' class='btn-phpinfo'>Ejecutar y ver phpinfo() completo en nueva pestaña</a>";
                 ?>
             </div>
         </main>

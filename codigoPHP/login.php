@@ -9,7 +9,7 @@ session_start();
 
 // libreria de validacion y configuracion de la base de datos
 require_once '../core/231018libreriaValidacion.php';
-require_once '../config/configDBPDOCasa.php';
+require_once '../config/configDBPDOClase.php';
 
 // Si el usuario pulsa cancelar, se le redirige al indice publico
 if (isset($_REQUEST['cancelar'])) {
@@ -193,7 +193,7 @@ if (isset($_REQUEST['login'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">TEMA 5: LOGIN/LOGOFF</h1>
+                <h1 class="titulo-header">Proyecto Login Logoff Tema 5</h1>
             </div>
         </header>
 
@@ -202,11 +202,11 @@ if (isset($_REQUEST['login'])) {
 
                 <h2>Inicio de Sesión</h2>
 
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <p>
                         <label for="usuario">Usuario:</label>
                         <input type="text" name="usuario" id="usuario"
-                               value="<?php echo htmlspecialchars($_REQUEST['usuario'] ?? ''); ?>">
+                               value="<?php echo $_REQUEST['usuario'] ?? ''; ?>">
                         <span class="error"><?php echo $aErrores['usuario']; ?></span>
                     </p>
                     <p>
