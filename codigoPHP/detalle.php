@@ -38,19 +38,6 @@ if (isset($_REQUEST['volver'])) {
         <link rel="stylesheet" href="../../webroot/css/styles.css">
         <link rel="stylesheet" href="../webroot/css/estilos.css">
         <style>
-            .cabecera__contenedor {
-                max-width: none;
-                margin: 0;
-                justify-content: flex-start;
-                padding-left: 20px;
-            }
-
-            .titulo-header {
-                color: white;
-                text-align: left !important;
-                margin: 0;
-            }
-
             .container {
                 max-width: 950px;
                 margin: 30px auto;
@@ -152,7 +139,8 @@ if (isset($_REQUEST['volver'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">Proyecto Login Logoff Tema 5 (Detalle)</h1>
+                <a href="../indexLoginLogoffTema5.php"><img class="cabecera__logo" src="../webroot/images/logoLoginLogoff.webp" alt="Proyecto Login Logoff Tema 5"></a>
+                <h2 class="cabecera__titulo">Detalle</h2>
             </div>
         </header>
 
@@ -216,6 +204,9 @@ if (isset($_REQUEST['volver'])) {
         <!-- Bloque: Pie -->
         <footer class="pie">
             <div class="pie__redes">
+                <a class="pie__red" href="../indexLoginLogoffTema5.php" title="Ir al índice del Login Logoff" aria-label="Ir al índice del Login Logoff">
+                    <img src="../../webroot/images/icons/casa.png" alt="">
+                </a>
                 <a class="pie__red" href="https://github.com/moisesdcsauces/MDCDWESProyectoLoginLogoffTema5" target="_blank" rel="noopener" aria-label="GitHub">
                     <img src="../../webroot/images/icons/github.png" alt="">
                 </a>

@@ -1,9 +1,52 @@
 /* ============================================
    PROYECTO TEMA 3 — DWES
    ============================================ */
-.titulo-header{
+/* ---------- Cabecera: logo a la izquierda y titulo centrado ---------- */
+/* Cabecera mas alta que la del portfolio (60px) para que el logo se lea */
+:root {
+    --altura-cabecera: 80px;
+}
+
+.cabecera__contenedor {
+    max-width: none;
+    margin: 0;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.cabecera__logo {
+    display: block;
+    height: 72px;
+    width: auto;
+}
+
+/* El titulo se centra respecto a todo el header, no respecto al hueco que deja el logo */
+.cabecera__titulo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
+    border: none;
     color: white;
-    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* En pantallas estrechas se reduce todo para que el titulo no pise el logo */
+@media (max-width: 600px) {
+    .cabecera__logo {
+        height: 50px;
+    }
+
+    .cabecera__titulo {
+        left: auto;
+        right: 20px;
+        transform: translateY(-50%);
+        font-size: 18px;
+    }
 }
 .container {
     max-width: 900px;

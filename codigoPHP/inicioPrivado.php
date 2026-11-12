@@ -51,19 +51,6 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
         <link rel="stylesheet" href="../../webroot/css/styles.css">
         <link rel="stylesheet" href="../webroot/css/estilos.css">
         <style>
-            .cabecera__contenedor {
-                max-width: none;
-                margin: 0;
-                justify-content: flex-start;
-                padding-left: 20px;
-            }
-
-            .titulo-header {
-                color: white;
-                text-align: left !important;
-                margin: 0;
-            }
-
             .container {
                 max-width: 900px;
                 margin: 30px auto;
@@ -125,14 +112,14 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
         <!-- Bloque: Cabecera -->
         <header id="site-header" class="cabecera">
             <div class="cabecera__contenedor">
-                <h1 class="titulo-header">Proyecto Login Logoff Tema 5 (Inicio Privado)</h1>
+                <a href="../indexLoginLogoffTema5.php"><img class="cabecera__logo" src="../webroot/images/logoLoginLogoff.webp" alt="Proyecto Login Logoff Tema 5"></a>
+                <h2 class="cabecera__titulo">Inicio Privado</h2>
             </div>
         </header>
 
         <main>
             <div class="container">
 
-                <h2>Inicio Privado</h2>
 
                 <p class="bienvenida">Bienvenido/a <strong><?php echo $descUsuario; ?></strong></p>
 
@@ -157,6 +144,9 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
         <!-- Bloque: Pie -->
         <footer class="pie">
             <div class="pie__redes">
+                <a class="pie__red" href="../indexLoginLogoffTema5.php" title="Ir al índice del Login Logoff" aria-label="Ir al índice del Login Logoff">
+                    <img src="../../webroot/images/icons/casa.png" alt="">
+                </a>
                 <a class="pie__red" href="https://github.com/moisesdcsauces/MDCDWESProyectoLoginLogoffTema5" target="_blank" rel="noopener" aria-label="GitHub">
                     <img src="../../webroot/images/icons/github.png" alt="">
                 </a>
