@@ -11,6 +11,12 @@ session_start();
 require_once '../core/231018libreriaValidacion.php';
 require_once '../config/configDBPDOClase.php';
 
+// Si el usuario ya ha iniciado la sesion, lo redireccionamos al accesso privado
+if (isset($_SESSION['usuarioMDCDWESAppLoginLogoff'])) {
+    header("Location: inicioPrivado.php");
+    exit;
+}
+
 // Si el usuario pulsa cancelar, se le redirige al indice publico
 if (isset($_REQUEST['cancelar'])) {
     header("Location: ../indexLoginLogoffTema5.php");
@@ -39,7 +45,7 @@ if (isset($_REQUEST['login'])) {
             // Instanciamos el objeto PDO
             $miDB = new PDO(HOST, USER, PASS);
 
-// Usamos la logica de encriptacion SHA2(CONCAT(usuario, password), 256)
+            // Usamos la logica de encriptacion SHA2(CONCAT(usuario, password), 256)
             $consulta = $miDB->prepare(
                     "SELECT * FROM T01_Usuario 
                  WHERE T01_CodUsuario = :usuario 
