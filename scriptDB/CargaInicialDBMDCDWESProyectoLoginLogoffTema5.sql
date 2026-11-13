@@ -17,7 +17,7 @@ INSERT INTO T01_Usuario (T01_CodUsuario, T01_Password, T01_DescUsuario, T01_Fech
 ('santiago', SHA2(CONCAT('santiago', 'paso'), 256), 'Santiago', NOW(), 0, 'usuario'),
 ('heraclio', SHA2(CONCAT('heraclio', 'paso'), 256), 'Heraclio Borbujo', NOW(), 0, 'usuario'),
 ('amor', SHA2(CONCAT('amor', 'paso'), 256), 'Amor Rodriguez', NOW(), 0, 'usuario'),
-('jano', SHA2(CONCAT('alejandro', 'paso'), 256), 'Alejandro', NOW(), 0, 'usuario'),
+('jano', SHA2(CONCAT('jano', 'paso'), 256), 'Alejandro', NOW(), 0, 'usuario'),
 ('manuel', SHA2(CONCAT('manuel', 'paso'), 256), 'Manuel Cuesta', NOW(), 0, 'usuario'),
 ('antonio', SHA2(CONCAT('antonio', 'paso'), 256), 'Antonio Jañez', NOW(), 0, 'usuario'),
 ('alberto', SHA2(CONCAT('alberto', 'paso'), 256), 'Alberto', NOW(), 0, 'usuario'),
