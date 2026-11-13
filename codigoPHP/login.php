@@ -39,18 +39,17 @@ if (isset($_REQUEST['login'])) {
             // Instanciamos el objeto PDO
             $miDB = new PDO(HOST, USER, PASS);
 
-            // Usamos la logica de encriptacion SHA2(CONCAT(usuario, password), 256)
+// Usamos la logica de encriptacion SHA2(CONCAT(usuario, password), 256)
             $consulta = $miDB->prepare(
                     "SELECT * FROM T01_Usuario 
                  WHERE T01_CodUsuario = :usuario 
-                 AND T01_Password = SHA2(CONCAT(:usuarioConcatenado, :password), 256)"
+                 AND T01_Password = SHA2(CONCAT(:usuario, :password), 256)"
             );
 
             // Pasamos los parametros
             $consulta->execute([
-                ':usuario' => $_REQUEST['usuario'],
-                ':usuarioConcatenado' => $_REQUEST['usuario'],
-                ':password' => $_REQUEST['password']
+                ':usuario' => trim($_REQUEST['usuario']),
+                ':password' => trim($_REQUEST['password'])
             ]);
 
             // Recuperamos el objeto usuario
@@ -61,7 +60,7 @@ if (isset($_REQUEST['login'])) {
                 $aErrores['password'] = "Usuario o contraseña incorrectos.";
                 $entradaOK = false;
             } else {
-
+                $entradaOK = true;
                 // Actualizamos el numero de conexiones y la fecha de ultima conexion
                 $actualizar = $miDB->prepare(
                         "UPDATE T01_Usuario 
@@ -72,7 +71,7 @@ if (isset($_REQUEST['login'])) {
                 $actualizar->execute([':usuarioUpdate' => $oUsuario->T01_CodUsuario]);
 
                 // Guardamos en la sesion los datos requeridos para la vista privada
-                $_SESSION['usuarioMDCDWESLoginLogoff'] = $oUsuario->T01_CodUsuario;
+                $_SESSION['usuarioMDCDWESAppLoginLogoff'] = $oUsuario->T01_CodUsuario;
                 $_SESSION['descUsuario'] = $oUsuario->T01_DescUsuario;
                 // Sumamos 1 al numero de conexiones para reflejar el acceso actual
                 $_SESSION['numConexiones'] = $oUsuario->T01_NumConexiones + 1;

@@ -8,7 +8,7 @@
 session_start();
 
 // Si el usuario no esta logueado, lo echamos al login
-if (!isset($_SESSION['usuarioMDCDWESLoginLogoff'])) {
+if (!isset($_SESSION['usuarioMDCDWESAppLoginLogoff'])) {
     header("Location: login.php");
     exit;
 }
@@ -153,18 +153,18 @@ if (isset($_REQUEST['volver'])) {
 
                 <?php              
                 // RECORRIDO DE TODAS LAS SUPERGLOBALES CON FOREACH
-                echo "<h2>2. Recorrido de variables Superglobales</h2>";
+                echo "<h2>Recorrido de variables Superglobales</h2>";
 
                 // Array asociativo que agrupa todas las variables superglobales de PHP
                 $aSuperglobales = [
-                    '\$_SESSION' => $_SESSION,
-                    '\$_COOKIE'  => $_COOKIE,
-                    '\$_SERVER'  => $_SERVER,
-                    '\$_REQUEST' => $_REQUEST,
-                    '\$_GET'     => $_GET,
-                    '\$_POST'    => $_POST,
-                    '\$_FILES'   => $_FILES,
-                    '\$_ENV'     => $_ENV
+                    '$_SESSION' => $_SESSION,
+                    '$_COOKIE'  => $_COOKIE,
+                    '$_SERVER'  => $_SERVER,
+                    '$_REQUEST' => $_REQUEST,
+                    '$_GET'     => $_GET,
+                    '$_POST'    => $_POST,
+                    '$_FILES'   => $_FILES,
+                    '$_ENV'     => $_ENV
                 ];
 
                 // Recorrido del array
