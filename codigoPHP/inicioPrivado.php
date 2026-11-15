@@ -27,14 +27,13 @@ if (isset($_REQUEST['cerrarSesion'])) {
     exit;
 }
 
-// Recuperamos de la sesion los datos que guardamos en el login
-$descUsuario = $_SESSION['descUsuario'];
-$numConexiones = $_SESSION['numConexiones'];
+// Recuperamos de la sesion el array con todos los datos del usuario que guardamos en el login
+$aUsuario = $_SESSION['usuarioMDCDWESAppLoginLogoff'];
 
 // Formateamos la fecha de la ultima conexion anterior (viene de la BBDD como "Y-m-d H:i:s")
 $fechaUltimaConexion = null;
-if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
-    $oFechaUltimaConexion = new DateTime($_SESSION['fechaHoraUltimaConexionAnterior']);
+if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
+    $oFechaUltimaConexion = new DateTime($aUsuario['T01_FechaHoraUltimaConexion']);
     $fechaUltimaConexion = $oFechaUltimaConexion->format('d/m/Y H:i:s');
 }
 ?>
@@ -121,14 +120,14 @@ if (!empty($_SESSION['fechaHoraUltimaConexionAnterior'])) {
             <div class="container">
 
 
-                <p class="bienvenida">Bienvenido/a <strong><?php echo $descUsuario; ?></strong></p>
+                <p class="bienvenida">Bienvenido/a <strong><?php echo $aUsuario['T01_DescUsuario']; ?></strong></p>
 
                 <?php
                 // Si es la primera vez que se conecta no hay conexion anterior que mostrar
-                if ($numConexiones == 1) {
+                if ($aUsuario['T01_NumConexiones'] == 1) {
                     echo "<p class='datos-conexion'>Esta es la primera vez que te conectas.</p>";
                 } else {
-                    echo "<p class='datos-conexion'>Esta es la <strong>" . $numConexiones . "</strong> vez que te conectas.<br>";
+                    echo "<p class='datos-conexion'>Esta es la <strong>" . $aUsuario['T01_NumConexiones'] . "</strong> vez que te conectas.<br>";
                     echo "Tu ultima conexion anterior fue el <strong>" . $fechaUltimaConexion . "</strong>.</p>";
                 }
                 ?>

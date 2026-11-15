@@ -116,12 +116,14 @@ if (isset($_REQUEST['volver'])) {
             }
 
             pre {
-                background-color: #2d2d2d;
-                color: #a6e22e;
+                background-color: #f4f4fb;
+                color: #333;
+                border-left: 3px solid #777bb4;
                 padding: 15px;
                 border-radius: 5px;
                 overflow-x: auto;
                 font-size: 13px;
+                margin: 0;
             }
 
             .vacio {

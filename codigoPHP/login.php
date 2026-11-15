@@ -25,30 +25,25 @@ if (isset($_REQUEST['cancelar'])) {
 
 $entradaOK = true;
 $aErrores = ['usuario' => null, 'password' => null];
+$aUsuario = null;
 
 // Procesamiento del formulario cuando se pulsa iniciar sesion
 if (isset($_REQUEST['login'])) {
-    // Validacion de los campos mediante la libreria
+    // Validacion del formato de los campos mediante la libreria
     $aErrores['usuario'] = validacionFormularios::comprobarAlfabetico($_REQUEST['usuario'], 8, 4, 1);
     $aErrores['password'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 16, 4, 1);
 
-    // Recorremos el array de errores para comprobar si hay alguno
-    foreach ($aErrores as $error) {
-        if ($error != null) {
-            $entradaOK = false;
-        }
-    }
-
-    // Si la validacion es correcta, comprobamos las credenciales en la BBDD
-    if ($entradaOK) {
+    // Si el formato es correcto, la validacion continua buscando el usuario en la BBDD
+    if ($aErrores['usuario'] == null && $aErrores['password'] == null) {
         try {
             // Instanciamos el objeto PDO
             $miDB = new PDO(HOST, USER, PASS);
 
-            // Usamos la logica de encriptacion SHA2(CONCAT(usuario, password), 256)
+            // La contraseña se comprueba en el WHERE con SHA2(CONCAT(usuario, password), 256)
             $consulta = $miDB->prepare(
-                    "SELECT * FROM T01_Usuario 
-                 WHERE T01_CodUsuario = :usuario 
+                    "SELECT T01_CodUsuario, T01_DescUsuario, T01_FechaHoraUltimaConexion, T01_NumConexiones, T01_Perfil
+                 FROM T01_Usuario
+                 WHERE T01_CodUsuario = :usuario
                  AND T01_Password = SHA2(CONCAT(:usuario, :password), 256)"
             );
 
@@ -58,46 +53,61 @@ if (isset($_REQUEST['login'])) {
                 ':password' => trim($_REQUEST['password'])
             ]);
 
-            // Recuperamos el objeto usuario
-            $oUsuario = $consulta->fetchObject();
+            // Recuperamos el usuario como array asociativo. Añadir fetch_assoc al pdf de clases y funciones
+            $aUsuario = $consulta->fetch(PDO::FETCH_ASSOC);
 
-            // Si el usuario no existe o la contraseña es incorrecta
-            if (!$oUsuario) {
+            // Si el usuario no existe o la contraseña es incorrecta, es un error de validacion mas
+            if (!$aUsuario) {
                 $aErrores['password'] = "Usuario o contraseña incorrectos.";
-                $entradaOK = false;
-            } else {
-                $entradaOK = true;
-                // Actualizamos el numero de conexiones y la fecha de ultima conexion
-                $actualizar = $miDB->prepare(
-                        "UPDATE T01_Usuario 
-                     SET T01_NumConexiones = T01_NumConexiones + 1, 
-                         T01_FechaHoraUltimaConexion = NOW() 
-                     WHERE T01_CodUsuario = :usuarioUpdate"
-                );
-                $actualizar->execute([':usuarioUpdate' => $oUsuario->T01_CodUsuario]);
-
-                // Guardamos en la sesion los datos requeridos para la vista privada
-                $_SESSION['usuarioMDCDWESAppLoginLogoff'] = $oUsuario->T01_CodUsuario;
-                $_SESSION['descUsuario'] = $oUsuario->T01_DescUsuario;
-                // Sumamos 1 al numero de conexiones para reflejar el acceso actual
-                $_SESSION['numConexiones'] = $oUsuario->T01_NumConexiones + 1;
-                $_SESSION['fechaHoraUltimaConexionAnterior'] = $oUsuario->T01_FechaHoraUltimaConexion;
-
-                // Cerramos conexion y redirigimos al area privada
-                unset($miDB);
-                header("Location: ./inicioPrivado.php");
-                exit;
             }
         } catch (PDOException $miExcepcionPDO) {
             $aErrores['password'] = "Error de conexion: " . $miExcepcionPDO->getMessage();
-            $entradaOK = false;
         } finally {
             unset($miDB);
+        }
+    }
+
+    // Recorremos el array de errores para comprobar si hay alguno
+    foreach ($aErrores as $error) {
+        if ($error != null) {
+            $entradaOK = false;
         }
     }
 } else {
     // Si no se ha enviado el formulario, forzamos a que no se procese
     $entradaOK = false;
+}
+
+// Si todo es correcto, actualizamos las conexiones, guardamos la sesion y entramos
+if ($entradaOK) {
+    try {
+        $miDB = new PDO(HOST, USER, PASS);
+
+        // Actualizamos el numero de conexiones y la fecha de ultima conexion
+        $actualizar = $miDB->prepare(
+                "UPDATE T01_Usuario
+             SET T01_NumConexiones = T01_NumConexiones + 1,
+                 T01_FechaHoraUltimaConexion = NOW()
+             WHERE T01_CodUsuario = :usuarioUpdate"
+        );
+        $actualizar->execute([':usuarioUpdate' => $aUsuario['T01_CodUsuario']]);
+
+        // Sumamos 1 al numero de conexiones para reflejar el acceso actual
+        $aUsuario['T01_NumConexiones']++;
+
+        // Guardamos en la sesion el usuario entero en un unico array
+        $_SESSION['usuarioMDCDWESAppLoginLogoff'] = $aUsuario;
+
+        // Cerramos conexion y redirigimos al area privada
+        unset($miDB);
+        header("Location: ./inicioPrivado.php");
+        exit;
+    } catch (PDOException $miExcepcionPDO) {
+        // Si falla la actualizacion no dejamos entrar y mostramos el error en el formulario
+        $aErrores['password'] = "Error de conexion: " . $miExcepcionPDO->getMessage();
+    } finally {
+        unset($miDB);
+    }
 }
 ?>
 
