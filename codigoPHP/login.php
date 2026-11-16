@@ -23,6 +23,12 @@ if (isset($_REQUEST['cancelar'])) {
     exit;
 }
 
+// Si el usuario pulsa registrarse, se le lleva al formulario de registro
+if (isset($_REQUEST['registro'])) {
+    header("Location: registro.php");
+    exit;
+}
+
 $entradaOK = true;
 $aErrores = ['usuario' => null, 'password' => null];
 $aUsuario = null;
@@ -152,11 +158,27 @@ if ($entradaOK) {
             }
 
             .btn-ejecutar {
-                background-color: #28a745;
+                background-color: #0d6efd;
             }
 
             .btn-ejecutar:hover {
-                opacity: 0.9;
+                background-color: #0b5ed7;
+            }
+
+            .btn-registro {
+                background-color: #198754;
+            }
+
+            .btn-registro:hover {
+                background-color: #157347;
+            }
+
+            .btn-cancelar {
+                background-color: #6c757d;
+            }
+
+            .btn-cancelar:hover {
+                background-color: #5c636a;
             }
 
             .form-group {
@@ -218,7 +240,8 @@ if ($entradaOK) {
                     </p>
                     <br>
                     <input type="submit" name="login" value="Iniciar Sesión" class="btn btn-ejecutar">
-                    <input type="submit" name="cancelar" value="Cancelar" class="btn" style="background-color: #dc3545;">
+                    <input type="submit" name="registro" value="Registrarse" class="btn btn-registro">
+                    <input type="submit" name="cancelar" value="Cancelar" class="btn btn-cancelar">
                 </form>
 
             </div>

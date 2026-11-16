@@ -73,16 +73,16 @@ if (isset($_REQUEST['volver'])) {
             }
 
             .btn-volver {
-                background-color: #474a8a;
+                background-color: #6c757d;
             }
             
             .btn-volver:hover {
-                background-color: #363970;
+                background-color: #5c636a;
             }
 
             .btn-phpinfo {
                 display: inline-block;
-                background-color: #17a2b8;
+                background-color: #474a8a;
                 color: white;
                 padding: 10px 15px;
                 text-decoration: none;
@@ -91,7 +91,7 @@ if (isset($_REQUEST['volver'])) {
                 margin-bottom: 20px;
             }
             .btn-phpinfo:hover {
-                background-color: #138496;
+                background-color: #363970;
             }
 
             table.tabla-superglobales {

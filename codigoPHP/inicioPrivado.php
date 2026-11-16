@@ -19,9 +19,14 @@ if (isset($_REQUEST['detalle'])) {
     exit;
 }
 
+// Si el usuario pulsa editar perfil, se le lleva a la pagina de edicion
+if (isset($_REQUEST['editarPerfil'])) {
+    header("Location: editarPerfil.php");
+    exit;
+}
+
 // Si el usuario pulsa cerrar sesion, cerramos la sesion y volvemos al indice publico
 if (isset($_REQUEST['cerrarSesion'])) {
-    session_unset();
     session_destroy();
     header("Location: ../indexLoginLogoffTema5.php");
     exit;
@@ -98,6 +103,14 @@ if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
                 background-color: #363970;
             }
 
+            .btn-editar {
+                background-color: #c2410c;
+            }
+
+            .btn-editar:hover {
+                background-color: #9a3412;
+            }
+
             .btn-cerrar {
                 background-color: #dc3545;
             }
@@ -134,6 +147,7 @@ if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <input type="submit" name="detalle" value="Detalle" class="btn btn-detalle">
+                    <input type="submit" name="editarPerfil" value="Editar Perfil" class="btn btn-editar">
                     <input type="submit" name="cerrarSesion" value="Cerrar Sesión" class="btn btn-cerrar">
                 </form>
 

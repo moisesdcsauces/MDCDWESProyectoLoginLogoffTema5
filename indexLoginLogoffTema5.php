@@ -10,6 +10,12 @@ if (isset($_REQUEST['login'])) {
     header("Location: codigoPHP/login.php");
     exit;
 }
+
+// Si el usuario pulsa registrarse, se le lleva al formulario de registro
+if (isset($_REQUEST['registro'])) {
+    header("Location: codigoPHP/registro.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,10 +59,19 @@ if (isset($_REQUEST['login'])) {
             }
 
             .btn-ejecutar {
-                background-color: #28a745;
+                background-color: #0d6efd;
             }
+
             .btn-ejecutar:hover {
-                opacity: 0.9;
+                background-color: #0b5ed7;
+            }
+
+            .btn-registro {
+                background-color: #198754;
+            }
+
+            .btn-registro:hover {
+                background-color: #157347;
             }
         </style>
     </head>
@@ -75,6 +90,7 @@ if (isset($_REQUEST['login'])) {
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <input type="submit" name="login" id="login" value="Iniciar Sesión" class="btn btn-ejecutar"/>
+                    <input type="submit" name="registro" id="registro" value="Registrarse" class="btn btn-registro"/>
                 </form>
 
                 <img src="./webroot/images/modelo.png" alt="modelo de datos">
