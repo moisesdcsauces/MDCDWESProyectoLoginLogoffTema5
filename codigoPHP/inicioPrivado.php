@@ -126,6 +126,21 @@ if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
             <div class="cabecera__contenedor">
                 <a href="../indexLoginLogoffTema5.php"><img class="cabecera__logo" src="../webroot/images/logoLoginLogoff.webp" alt="Proyecto Login Logoff Tema 5"></a>
                 <h2 class="cabecera__titulo">Inicio Privado</h2>
+                
+                <input type="radio" name="cookie" id="cookieES">
+                <label for="cookieES">
+                    <img class="cookie" src="../webroot/images/ES.png" alt="Español">
+                </label>
+                
+                <input type="radio" name="cookie" id="cookieEN">
+                <label for="cookieEN">
+                    <img class="cookie" src="../webroot/images/GB.png" alt="Ingles">
+                </label>
+                
+                <input type="radio" name="cookie" id="cookiePT">
+                <label for="cookiePT">
+                    <img class="cookie" src="../webroot/images/PT.png" alt="Portugues">
+                </label>
             </div>
         </header>
 

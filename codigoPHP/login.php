@@ -47,8 +47,7 @@ if (isset($_REQUEST['login'])) {
 
             // La contraseña se comprueba en el WHERE con SHA2(CONCAT(usuario, password), 256)
             $consulta = $miDB->prepare(
-                    "SELECT T01_CodUsuario, T01_DescUsuario, T01_FechaHoraUltimaConexion, T01_NumConexiones, T01_Perfil
-                 FROM T01_Usuario
+                    "SELECT * FROM T01_Usuario
                  WHERE T01_CodUsuario = :usuario
                  AND T01_Password = SHA2(CONCAT(:usuario, :password), 256)"
             );
