@@ -93,15 +93,16 @@ if ($entradaOK) {
             ':descUsuario' => trim($_REQUEST['descUsuario'])
         ]);
 
-        // Montamos el usuario en un array con las mismas claves que guarda el login
-        // No hay conexion anterior, por eso la fecha va a null
-        $aUsuario = [
-            'T01_CodUsuario' => trim($_REQUEST['usuario']),
-            'T01_DescUsuario' => trim($_REQUEST['descUsuario']),
-            'T01_FechaHoraUltimaConexion' => null,
-            'T01_NumConexiones' => 1,
-            'T01_Perfil' => 'usuario'
-        ];
+        // Leemos el usuario recien creado de la BBDD, con las mismas columnas que el login,
+        // para guardar en la sesion los datos tal cual estan en la tabla.
+        // T01_FechaHoraUltimaConexionAnterior queda a NULL porque todavia no hay conexion anterior
+        $consulta = $miDB->prepare(
+                "SELECT T01_CodUsuario, T01_DescUsuario, T01_FechaHoraUltimaConexion, T01_FechaHoraUltimaConexionAnterior, T01_NumConexiones, T01_Perfil
+             FROM T01_Usuario
+             WHERE T01_CodUsuario = :usuario"
+        );
+        $consulta->execute([':usuario' => trim($_REQUEST['usuario'])]);
+        $aUsuario = $consulta->fetch(PDO::FETCH_ASSOC);
 
         // Guardamos en la sesion el usuario entero en un unico array
         $_SESSION['usuarioMDCDWESAppLoginLogoff'] = $aUsuario;

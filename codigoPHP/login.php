@@ -88,17 +88,24 @@ if ($entradaOK) {
     try {
         $miDB = new PDO(HOST, USER, PASS);
 
-        // Actualizamos el numero de conexiones y la fecha de ultima conexion
+        // la ultima conexion que habia pasa a ser la anterior y la ultima pasa a ser ahora.
+        // primero se copia la fecha vieja a la anterior y despues se machaca la ultima con NOW()
         $actualizar = $miDB->prepare(
                 "UPDATE T01_Usuario
              SET T01_NumConexiones = T01_NumConexiones + 1,
+                 T01_FechaHoraUltimaConexionAnterior = T01_FechaHoraUltimaConexion,
                  T01_FechaHoraUltimaConexion = NOW()
              WHERE T01_CodUsuario = :usuarioUpdate"
         );
         $actualizar->execute([':usuarioUpdate' => $aUsuario['T01_CodUsuario']]);
 
-        // Sumamos 1 al numero de conexiones para reflejar el acceso actual
-        $aUsuario['T01_NumConexiones']++;
+        // Volvemos a leer el usuario de la BBDD para que la sesion tenga los datos ya actualizados
+        $consulta = $miDB->prepare(
+                "SELECT * FROM T01_Usuario
+             WHERE T01_CodUsuario = :usuario"
+        );
+        $consulta->execute([':usuario' => $aUsuario['T01_CodUsuario']]);
+        $aUsuario = $consulta->fetch(PDO::FETCH_ASSOC);
 
         // Guardamos en la sesion el usuario entero en un unico array
         $_SESSION['usuarioMDCDWESAppLoginLogoff'] = $aUsuario;

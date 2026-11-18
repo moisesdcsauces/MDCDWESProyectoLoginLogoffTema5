@@ -35,10 +35,15 @@ $aUsuario = $_SESSION['usuarioMDCDWESAppLoginLogoff'];
 $entradaOK = true;
 $aErrores = ['descUsuario' => null, 'passwordEliminar' => null];
 
+// Al pulsar Eliminar Cuenta la pagina se recarga y aparece el campo de la contraseña.
+// Al pulsar Eliminar definitivamente se comprueba la contraseña y se borra.
+// Si la contraseña falla, el campo se sigue mostrando con el error. Cancelar recarga la pagina sin el campo.
+$mostrarEliminar = isset($_REQUEST['mostrarEliminar']) || isset($_REQUEST['eliminarCuenta']);
+
 // Si el usuario confirma eliminar cuenta, comprobamos su contraseña, lo borramos de la BBDD,
 // destruimos la sesion y volvemos al indice publico
 if (isset($_REQUEST['eliminarCuenta'])) {
-    // La ventana de JavaScript solo recoge la contraseña, la comprobacion de verdad se hace aqui
+    // Validacion del formato de la contraseña mediante la libreria
     $aErrores['passwordEliminar'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['passwordEliminar'], 16, 4, 1);
 
     if ($aErrores['passwordEliminar'] == null) {
@@ -199,29 +204,19 @@ if ($entradaOK) {
                 border-top: 1px solid #e9ecef;
             }
 
-            .dialogo {
-                width: 400px;
-                margin: auto;
-                padding: 25px;
-                border: none;
+            .confirmar-eliminar {
+                max-width: 450px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fdf2f3;
                 border-top: 4px solid #dc3545;
                 border-radius: 8px;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-                text-align: center;
             }
 
-            .dialogo::backdrop {
-                background-color: rgba(0,0,0,0.5);
-            }
-
-            .dialogo__titulo {
-                color: #dc3545;
-                margin-top: 0;
-            }
-
-            .dialogo__texto {
+            .confirmar-eliminar__texto {
                 color: #555;
                 font-size: 15px;
+                margin-top: 0;
             }
 
             .error {
@@ -270,27 +265,33 @@ if ($entradaOK) {
                     <input type="submit" name="aceptar" value="Guardar cambios" class="btn btn-editar">
                     <input type="submit" name="cambiarPassword" value="Cambiar Contraseña" class="btn btn-password">
                     <input type="submit" name="cancelar" value="Cancelar" class="btn btn-cancelar">
-
-                    <!-- Eliminar la cuenta no tiene vuelta atras, por eso va separado y abre la ventana de confirmacion -->
-                    <div class="zona-peligro">
-                        <input type="button" id="btnEliminar" value="Eliminar Cuenta" class="btn btn-eliminar">
-                    </div>
                 </form>
 
-                <!-- Ventana que pide la contraseña antes de eliminar la cuenta -->
-                <dialog id="dialogoEliminar" class="dialogo">
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="formEliminar">
-                        <h3 class="dialogo__titulo">Eliminar cuenta</h3>
-                        <p class="dialogo__texto">¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.<br>Escribe tu contraseña para confirmarlo.</p>
-                        <p>
-                            <label for="passwordEliminar">Contraseña:</label>
-                            <input type="password" name="passwordEliminar" id="passwordEliminar" required>
-                            <span class="error" id="errorEliminar"><?php echo $aErrores['passwordEliminar']; ?></span>
-                        </p>
-                        <input type="submit" name="eliminarCuenta" value="Eliminar definitivamente" class="btn btn-eliminar">
-                        <input type="button" id="btnCerrarDialogo" value="Cancelar" class="btn btn-cancelar">
+                <!-- Eliminar la cuenta no tiene vuelta atras, por eso va separado y en su propio formulario -->
+                <div class="zona-peligro">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                        <?php
+                        if (!$mostrarEliminar) {
+                            // solo se ve el boton
+                            echo '<input type="submit" name="mostrarEliminar" value="Eliminar Cuenta" class="btn btn-eliminar">';
+                        } else {
+                            // se pide la contraseña para confirmar la eliminacion
+                            ?>
+                            <div class="confirmar-eliminar">
+                                <p class="confirmar-eliminar__texto">¿Seguro que quieres eliminar tu cuenta? Esta accion no se puede deshacer.<br>Escribe tu contraseña para confirmarlo.</p>
+                                <p>
+                                    <label for="passwordEliminar">Contraseña:</label>
+                                    <input type="password" name="passwordEliminar" id="passwordEliminar">
+                                    <span class="error"><?php echo $aErrores['passwordEliminar']; ?></span>
+                                </p>
+                                <input type="submit" name="eliminarCuenta" value="Eliminar definitivamente" class="btn btn-eliminar">
+                                <input type="submit" name="cancelarEliminar" value="Cancelar" class="btn btn-cancelar">
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </form>
-                </dialog>
+                </div>
 
             </div>
         </main>
@@ -312,26 +313,5 @@ if ($entradaOK) {
         </footer>
 
         <script src="../../webroot/js/main.js" defer></script>
-        <script>
-            // Ventana para confirmar la eliminacion de la cuenta
-            const dialogoEliminar = document.getElementById('dialogoEliminar');
-            const errorEliminar = document.getElementById('errorEliminar');
-
-            // Eliminar Cuenta abre la ventana
-            document.getElementById('btnEliminar').addEventListener('click', function () {
-                errorEliminar.textContent = '';
-                dialogoEliminar.showModal();
-            });
-
-            // Cancelar la cierra sin enviar nada
-            document.getElementById('btnCerrarDialogo').addEventListener('click', function () {
-                dialogoEliminar.close();
-            });
-
-            // Si el servidor ha devuelto un error, la ventana se vuelve a abrir mostrandolo
-            if (errorEliminar.textContent.trim() !== '') {
-                dialogoEliminar.showModal();
-            }
-        </script>
     </body>
 </html>

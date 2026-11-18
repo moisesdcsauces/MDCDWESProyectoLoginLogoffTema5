@@ -16,6 +16,22 @@ if (isset($_REQUEST['registro'])) {
     header("Location: codigoPHP/registro.php");
     exit;
 }
+
+// Idiomas que se pueden elegir con las banderas
+$aIdiomas = ['ES', 'EN', 'PT'];
+
+// Si el usuario pulsa una bandera, guardamos el idioma en la cookie durante una semana.
+if (isset($_REQUEST['idioma']) && in_array($_REQUEST['idioma'], $aIdiomas)) {
+    // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
+    setcookie('idioma', $_REQUEST['idioma'], time() + 60 * 60 * 24 * 7);
+
+    // Recargamos la pagina para que $_COOKIE ya tenga el idioma nuevo y se marque su bandera
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+
+// Idioma guardado en la cookie. Si no hay cookie, por defecto español
+$idiomaSeleccionado = (isset($_COOKIE['idioma']) && in_array($_COOKIE['idioma'], $aIdiomas)) ? $_COOKIE['idioma'] : 'ES';
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +89,60 @@ if (isset($_REQUEST['registro'])) {
             .btn-registro:hover {
                 background-color: #157347;
             }
+
+            /* Selector de idioma */
+            .idioma {
+                margin-left: auto;
+                margin-right: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .bandera {
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                opacity: 0.6;
+                transition: transform 0.2s, opacity 0.2s;
+            }
+
+            .bandera img {
+                display: block;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+            }
+
+            .bandera:hover {
+                opacity: 1;
+            }
+
+            .bandera--activa {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+
+            .bandera--activa img {
+                box-shadow: 0 0 0 2px white;
+            }
+
+            @media (max-width: 600px) {
+                .idioma {
+                    margin-right: 10px;
+                    gap: 8px;
+                }
+
+                .bandera img {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                .cabecera__titulo {
+                    right: 125px;
+                }
+            }
         </style>
     </head>
     <body class="pagina-ajustada">
@@ -81,6 +151,22 @@ if (isset($_REQUEST['registro'])) {
             <div class="cabecera__contenedor">
                 <a href="./indexLoginLogoffTema5.php"><img class="cabecera__logo" src="webroot/images/logoLoginLogoff.webp" alt="Proyecto Login Logoff Tema 5"></a>
                 <h2 class="cabecera__titulo">Inicio Público</h2>
+
+                <!-- Selector de idioma: cada bandera es un boton submit con name="idioma" y su value.
+                     Al pulsarlo se envia el formulario con ese idioma y se guarda la cookie. -->
+                <form class="idioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <button type="submit" name="idioma" value="ES" title="Español" class="bandera <?php echo ($idiomaSeleccionado == 'ES') ? 'bandera--activa' : ''; ?>">
+                        <img src="webroot/images/ES.png" alt="Español">
+                    </button>
+
+                    <button type="submit" name="idioma" value="EN" title="English" class="bandera <?php echo ($idiomaSeleccionado == 'EN') ? 'bandera--activa' : ''; ?>">
+                        <img src="webroot/images/GB.png" alt="English">
+                    </button>
+
+                    <button type="submit" name="idioma" value="PT" title="Português" class="bandera <?php echo ($idiomaSeleccionado == 'PT') ? 'bandera--activa' : ''; ?>">
+                        <img src="webroot/images/PT.png" alt="Portugues">
+                    </button>
+                </form>
             </div>
         </header>
 

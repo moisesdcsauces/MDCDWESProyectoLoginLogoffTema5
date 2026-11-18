@@ -35,12 +35,23 @@ if (isset($_REQUEST['cerrarSesion'])) {
 // Recuperamos de la sesion el array con todos los datos del usuario que guardamos en el login
 $aUsuario = $_SESSION['usuarioMDCDWESAppLoginLogoff'];
 
-// Formateamos la fecha de la ultima conexion anterior (viene de la BBDD como "Y-m-d H:i:s")
+// Formateamos la fecha de la conexion anterior (viene de la BBDD como "Y-m-d H:i:s").
+// Se usa el campo T01_FechaHoraUltimaConexionAnterior, que el login rellena antes de poner la ultima a NOW()
 $fechaUltimaConexion = null;
-if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
-    $oFechaUltimaConexion = new DateTime($aUsuario['T01_FechaHoraUltimaConexion']);
+if (!empty($aUsuario['T01_FechaHoraUltimaConexionAnterior'])) {
+    $oFechaUltimaConexion = new DateTime($aUsuario['T01_FechaHoraUltimaConexionAnterior']);
     $fechaUltimaConexion = $oFechaUltimaConexion->format('d/m/Y H:i:s');
 }
+
+// Saludo en cada idioma. El idioma se elige con las banderas del inicio publico y se guarda en la cookie 'idioma'
+$aBienvenida = [
+    'ES' => 'Bienvenido/a',
+    'EN' => 'Welcome',
+    'PT' => 'Bem-vindo/a'
+];
+
+// Si no hay cookie o tiene un valor que no esta en el array, se saluda en español
+$idioma = (isset($_COOKIE['idioma']) && array_key_exists($_COOKIE['idioma'], $aBienvenida)) ? $_COOKIE['idioma'] : 'ES';
 ?>
 
 <!DOCTYPE html>
@@ -126,21 +137,6 @@ if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
             <div class="cabecera__contenedor">
                 <a href="../indexLoginLogoffTema5.php"><img class="cabecera__logo" src="../webroot/images/logoLoginLogoff.webp" alt="Proyecto Login Logoff Tema 5"></a>
                 <h2 class="cabecera__titulo">Inicio Privado</h2>
-                
-                <input type="radio" name="cookie" id="cookieES">
-                <label for="cookieES">
-                    <img class="cookie" src="../webroot/images/ES.png" alt="Español">
-                </label>
-                
-                <input type="radio" name="cookie" id="cookieEN">
-                <label for="cookieEN">
-                    <img class="cookie" src="../webroot/images/GB.png" alt="Ingles">
-                </label>
-                
-                <input type="radio" name="cookie" id="cookiePT">
-                <label for="cookiePT">
-                    <img class="cookie" src="../webroot/images/PT.png" alt="Portugues">
-                </label>
             </div>
         </header>
 
@@ -148,7 +144,7 @@ if (!empty($aUsuario['T01_FechaHoraUltimaConexion'])) {
             <div class="container">
 
 
-                <p class="bienvenida">Bienvenido/a <strong><?php echo $aUsuario['T01_DescUsuario']; ?></strong></p>
+                <p class="bienvenida"><?php echo $aBienvenida[$idioma]; ?> <strong><?php echo $aUsuario['T01_DescUsuario']; ?></strong></p>
 
                 <?php
                 // Si es la primera vez que se conecta no hay conexion anterior que mostrar
