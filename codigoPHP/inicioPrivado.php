@@ -7,12 +7,6 @@
 // Iniciamos la sesion
 session_start();
 
-// Si la cookie no fue elegida, la inicilizamos (codigo de juanmi)
-if (!isset($_COOKIE['cookieIdioma'])) {
-    // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
-    setcookie('idioma', 'ES', time() + 60 * 60 * 24 * 7);
-}
-
 // Si el usuario no esta logueado, lo echamos al login
 if (!isset($_SESSION['usuarioMDCDWESAppLoginLogoff'])) {
     header("Location: login.php");
@@ -148,7 +142,7 @@ $aBienvenida = [
             <div class="container">
 
 
-                <p class="bienvenida"><?php echo $aBienvenida[$idioma]; ?> <strong><?php echo $aUsuario['T01_DescUsuario']; ?></strong></p>
+                <p class="bienvenida"><?php echo $aBienvenida[$_COOKIE['idioma']]; ?> <strong><?php echo $aUsuario['T01_DescUsuario']; ?></strong></p>
 
                 <?php
                 // Si es la primera vez que se conecta no hay conexion anterior que mostrar
