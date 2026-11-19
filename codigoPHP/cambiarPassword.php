@@ -35,6 +35,16 @@ if (isset($_REQUEST['cambiarPassword'])) {
     $aErrores['passwordActual'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['passwordActual'], 16, 4, 1);
     $aErrores['passwordNueva'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['passwordNueva'], 16, 4, 1);
 
+    // Validar espacios en la contraseña nueva
+    if (preg_match('/\s/', $_POST['passwordNueva'] ?? '')) {
+        $aErrores['passwordNueva'] = "La nueva contraseña no puede contener espacios en blanco.";
+    }
+
+    // Validar espacios en la repeticion
+    if (preg_match('/\s/', $_POST['repetirPassword'] ?? '')) {
+        $aErrores['repetirPassword'] = "La confirmacion no puede contener espacios en blanco.";
+    }
+
     // La nueva contraseña tiene que ser distinta de la actual
     if ($aErrores['passwordNueva'] == null && $_REQUEST['passwordNueva'] == $_REQUEST['passwordActual']) {
         $aErrores['passwordNueva'] = "La nueva contraseña tiene que ser distinta de la actual.";

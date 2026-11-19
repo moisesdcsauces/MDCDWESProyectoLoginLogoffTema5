@@ -34,6 +34,16 @@ if (isset($_REQUEST['registrarse'])) {
     $aErrores['descUsuario'] = validacionFormularios::comprobarAlfabetico($_REQUEST['descUsuario'], 255, 4, 1);
     $aErrores['password'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 16, 4, 1);
 
+    // Validar espacios en el usuario
+    if (preg_match('/\s/', $_REQUEST['usuario'] ?? '')) {
+        $aErrores['usuario'] = "El usuario no puede contener espacios en blanco.";
+    }
+
+    // Validar espacios en el password
+    if (preg_match('/\s/', $_REQUEST['password'] ?? '')) {
+        $aErrores['password'] = "El password no puede contener espacios en blanco.";
+    }
+
     // Las dos contraseñas tienen que coincidir
     if ($_REQUEST['password'] != $_REQUEST['repetirPassword']) {
         $aErrores['repetirPassword'] = "Las contraseñas no coinciden.";
@@ -52,7 +62,7 @@ if (isset($_REQUEST['registrarse'])) {
             );
 
             // Pasamos los parametros
-            $consulta->execute([':usuario' => trim($_REQUEST['usuario'])]);
+            $consulta->execute([':usuario' => $_REQUEST['usuario']]);
 
             // Si devuelve una fila, el codigo de usuario ya esta cogido
             if ($consulta->fetch(PDO::FETCH_ASSOC)) {
@@ -88,9 +98,9 @@ if ($entradaOK) {
              VALUES (:usuario, SHA2(CONCAT(:usuario, :password), 256), :descUsuario, NOW(), 1, 'usuario')"
         );
         $insertar->execute([
-            ':usuario' => trim($_REQUEST['usuario']),
-            ':password' => trim($_REQUEST['password']),
-            ':descUsuario' => trim($_REQUEST['descUsuario'])
+            ':usuario' => $_REQUEST['usuario'],
+            ':password' => $_REQUEST['password'],
+            ':descUsuario' => $_REQUEST['descUsuario']
         ]);
 
         // Leemos el usuario recien creado de la BBDD, con las mismas columnas que el login,
@@ -101,7 +111,7 @@ if ($entradaOK) {
              FROM T01_Usuario
              WHERE T01_CodUsuario = :usuario"
         );
-        $consulta->execute([':usuario' => trim($_REQUEST['usuario'])]);
+        $consulta->execute([':usuario' => $_REQUEST['usuario']]);
         $aUsuario = $consulta->fetch(PDO::FETCH_ASSOC);
 
         // Guardamos en la sesion el usuario entero en un unico array

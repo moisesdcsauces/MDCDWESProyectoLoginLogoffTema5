@@ -6,6 +6,12 @@
  */
 // session_start();
 
+// Si la cookie no fue elegida, la inicilizamos (codigo de juanmi)
+if (!isset($_COOKIE['cookieIdioma'])) {
+    // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
+    setcookie('idioma', 'ES', time() + 60 * 60 * 24 * 7);
+}
+
 if (isset($_REQUEST['login'])) {
     header("Location: codigoPHP/login.php");
     exit;
@@ -30,8 +36,6 @@ if (isset($_REQUEST['idioma']) && in_array($_REQUEST['idioma'], $aIdiomas)) {
     exit;
 }
 
-// Idioma guardado en la cookie. Si no hay cookie, por defecto español
-$idiomaSeleccionado = (isset($_COOKIE['idioma']) && in_array($_COOKIE['idioma'], $aIdiomas)) ? $_COOKIE['idioma'] : 'ES';
 ?>
 
 <!DOCTYPE html>
@@ -155,15 +159,15 @@ $idiomaSeleccionado = (isset($_COOKIE['idioma']) && in_array($_COOKIE['idioma'],
                 <!-- Selector de idioma: cada bandera es un boton submit con name="idioma" y su value.
                      Al pulsarlo se envia el formulario con ese idioma y se guarda la cookie. -->
                 <form class="idioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <button type="submit" name="idioma" value="ES" title="Español" class="bandera <?php echo ($idiomaSeleccionado == 'ES') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="ES" title="Español" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'ES') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/ES.png" alt="Español">
                     </button>
 
-                    <button type="submit" name="idioma" value="EN" title="English" class="bandera <?php echo ($idiomaSeleccionado == 'EN') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="EN" title="English" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'EN') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/GB.png" alt="English">
                     </button>
 
-                    <button type="submit" name="idioma" value="PT" title="Português" class="bandera <?php echo ($idiomaSeleccionado == 'PT') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="PT" title="Português" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'PT') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/PT.png" alt="Portugues">
                     </button>
                 </form>

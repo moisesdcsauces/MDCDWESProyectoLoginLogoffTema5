@@ -39,6 +39,16 @@ if (isset($_REQUEST['login'])) {
     $aErrores['usuario'] = validacionFormularios::comprobarAlfabetico($_REQUEST['usuario'], 8, 4, 1);
     $aErrores['password'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['password'], 16, 4, 1);
 
+    // Validar espacios en el usuario
+    if (preg_match('/\s/', $_REQUEST['usuario'] ?? '')) {
+        $aErrores['usuario'] = "El usuario no puede contener espacios en blanco.";
+    }
+
+    // Validar espacios en el password
+    if (preg_match('/\s/', $_REQUEST['password'] ?? '')) {
+        $aErrores['password'] = "El password no puede contener espacios en blanco.";
+    }
+
     // Si el formato es correcto, la validacion continua buscando el usuario en la BBDD
     if ($aErrores['usuario'] == null && $aErrores['password'] == null) {
         try {
@@ -54,8 +64,8 @@ if (isset($_REQUEST['login'])) {
 
             // Pasamos los parametros
             $consulta->execute([
-                ':usuario' => trim($_REQUEST['usuario']),
-                ':password' => trim($_REQUEST['password'])
+                ':usuario' => $_REQUEST['usuario'],
+                ':password' => $_REQUEST['password']
             ]);
 
             // Recuperamos el usuario como array asociativo. Añadir fetch_assoc al pdf de clases y funciones

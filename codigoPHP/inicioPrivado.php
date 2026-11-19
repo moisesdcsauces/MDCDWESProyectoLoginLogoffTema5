@@ -7,6 +7,12 @@
 // Iniciamos la sesion
 session_start();
 
+// Si la cookie no fue elegida, la inicilizamos (codigo de juanmi)
+if (!isset($_COOKIE['cookieIdioma'])) {
+    // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
+    setcookie('idioma', 'ES', time() + 60 * 60 * 24 * 7);
+}
+
 // Si el usuario no esta logueado, lo echamos al login
 if (!isset($_SESSION['usuarioMDCDWESAppLoginLogoff'])) {
     header("Location: login.php");
@@ -50,8 +56,6 @@ $aBienvenida = [
     'PT' => 'Bem-vindo/a'
 ];
 
-// Si no hay cookie o tiene un valor que no esta en el array, se saluda en español
-$idioma = (isset($_COOKIE['idioma']) && array_key_exists($_COOKIE['idioma'], $aBienvenida)) ? $_COOKIE['idioma'] : 'ES';
 ?>
 
 <!DOCTYPE html>
