@@ -7,7 +7,7 @@
 // session_start();
 
 // Si la cookie no fue elegida, la inicilizamos (codigo de juanmi)
-if (!isset($_COOKIE['cookieIdioma'])) {
+if (!isset($_COOKIE['idioma'])) {
     // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
     setcookie('idioma', 'ES', time() + 60 * 60 * 24 * 7);
 }
@@ -159,15 +159,15 @@ if (isset($_REQUEST['idioma']) && in_array($_REQUEST['idioma'], $aIdiomas)) {
                 <!-- Selector de idioma: cada bandera es un boton submit con name="idioma" y su value.
                      Al pulsarlo se envia el formulario con ese idioma y se guarda la cookie. -->
                 <form class="idioma" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <button type="submit" name="idioma" value="ES" title="Español" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'ES') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="ES" title="Español" class="bandera <?php echo ($_COOKIE['idioma'] == 'ES') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/ES.png" alt="Español">
                     </button>
 
-                    <button type="submit" name="idioma" value="EN" title="English" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'EN') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="EN" title="English" class="bandera <?php echo ($_COOKIE['idioma'] == 'EN') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/GB.png" alt="English">
                     </button>
 
-                    <button type="submit" name="idioma" value="PT" title="Português" class="bandera <?php echo ($_COOKIE['cookieIdioma'] == 'PT') ? 'bandera--activa' : ''; ?>">
+                    <button type="submit" name="idioma" value="PT" title="Português" class="bandera <?php echo ($_COOKIE['idioma'] == 'PT') ? 'bandera--activa' : ''; ?>">
                         <img src="webroot/images/PT.png" alt="Portugues">
                     </button>
                 </form>
