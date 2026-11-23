@@ -243,19 +243,19 @@ if ($entradaOK) {
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <!-- Los datos que no se pueden cambiar se muestran en solo lectura -->
-                    <p>
+                    <p class="campo">
                         <label for="usuario">Usuario:</label>
                         <input type="text" id="usuario" value="<?php echo $aUsuario['T01_CodUsuario']; ?>" readonly>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="perfil">Perfil:</label>
                         <input type="text" id="perfil" value="<?php echo $aUsuario['T01_Perfil']; ?>" readonly>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="numConexiones">Número de conexiones:</label>
                         <input type="text" id="numConexiones" value="<?php echo $aUsuario['T01_NumConexiones']; ?>" readonly>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="descUsuario">Nombre completo:</label>
                         <input type="text" name="descUsuario" id="descUsuario"
                                value="<?php echo $_REQUEST['descUsuario'] ?? $aUsuario['T01_DescUsuario']; ?>">
@@ -279,7 +279,7 @@ if ($entradaOK) {
                             ?>
                             <div class="confirmar-eliminar">
                                 <p class="confirmar-eliminar__texto">¿Seguro que quieres eliminar tu cuenta? Esta accion no se puede deshacer.<br>Escribe tu contraseña para confirmarlo.</p>
-                                <p>
+                                <p class="campo">
                                     <label for="passwordEliminar">Contraseña:</label>
                                     <input type="password" name="passwordEliminar" id="passwordEliminar">
                                     <span class="error"><?php echo $aErrores['passwordEliminar']; ?></span>

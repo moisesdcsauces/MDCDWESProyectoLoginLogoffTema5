@@ -198,17 +198,17 @@ if ($entradaOK) {
             <div class="container">
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <p>
+                    <p class="campo">
                         <label for="passwordActual">Contraseña actual:</label>
                         <input type="password" name="passwordActual" id="passwordActual">
                         <span class="error"><?php echo $aErrores['passwordActual']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="passwordNueva">Nueva contraseña:</label>
                         <input type="password" name="passwordNueva" id="passwordNueva">
                         <span class="error"><?php echo $aErrores['passwordNueva']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="repetirPassword">Repetir nueva contraseña:</label>
                         <input type="password" name="repetirPassword" id="repetirPassword">
                         <span class="error"><?php echo $aErrores['repetirPassword']; ?></span>

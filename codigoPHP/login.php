@@ -197,28 +197,6 @@ if ($entradaOK) {
                 background-color: #5c636a;
             }
 
-            .form-group {
-                margin-bottom: 20px;
-                text-align: left;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .form-group label {
-                margin-bottom: 5px;
-                font-weight: bold;
-                color: #474a8a;
-            }
-
-            .form-group input[type="text"],
-            .form-group input[type="password"] {
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                width: 250px;
-            }
-
             .error {
                 color: #dc3545;
                 font-size: 13px;
@@ -243,13 +221,13 @@ if ($entradaOK) {
 
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <p>
+                    <p class="campo">
                         <label for="usuario">Usuario:</label>
                         <input type="text" name="usuario" id="usuario"
                                value="<?php echo $_REQUEST['usuario'] ?? ''; ?>">
                         <span class="error"><?php echo $aErrores['usuario']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="password">Contraseña:</label>
                         <input type="password" name="password" id="password">
                         <span class="error"><?php echo $aErrores['password']; ?></span>

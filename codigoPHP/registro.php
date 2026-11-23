@@ -209,24 +209,24 @@ if ($entradaOK) {
             <div class="container">
 
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-                    <p>
+                    <p class="campo">
                         <label for="usuario">Usuario:</label>
                         <input type="text" name="usuario" id="usuario"
                                value="<?php echo $_REQUEST['usuario'] ?? ''; ?>">
                         <span class="error"><?php echo $aErrores['usuario']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="descUsuario">Nombre completo:</label>
                         <input type="text" name="descUsuario" id="descUsuario"
                                value="<?php echo $_REQUEST['descUsuario'] ?? ''; ?>">
                         <span class="error"><?php echo $aErrores['descUsuario']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="password">Contraseña:</label>
                         <input type="password" name="password" id="password">
                         <span class="error"><?php echo $aErrores['password']; ?></span>
                     </p>
-                    <p>
+                    <p class="campo">
                         <label for="repetirPassword">Repetir contraseña:</label>
                         <input type="password" name="repetirPassword" id="repetirPassword">
                         <span class="error"><?php echo $aErrores['repetirPassword']; ?></span>

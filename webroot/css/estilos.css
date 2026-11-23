@@ -83,3 +83,50 @@ th {
 .btn-ejecutar { background-color: #28a745; }
 .btn-codigo { background-color: #17a2b8; }
 .btn:hover { opacity: 0.8; }
+
+/* ---------- Campos de los formularios (login, registro, editar perfil, cambiar contraseña) ---------- */
+/* El main del portfolio es flex y el recuadro blanco se encogia hasta lo que ocupaba su contenido.
+   Con width 100% ocupa todo el ancho hasta su max-width (900px) y los formularios ganan espacio */
+.container {
+    width: 100%;
+}
+
+/* Cada campo es un bloque de ancho fijo y centrado, con la etiqueta encima de la caja.
+   Asi todas las cajas empiezan en el mismo sitio aunque las etiquetas tengan distinta longitud */
+/* width 100% con max-width: en pantalla grande mide 500px y en el movil ocupa todo el ancho disponible */
+.campo {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 10px auto;
+    text-align: left;
+}
+
+/* La etiqueta es pequeña y gris: indica que hay que poner, pero no es lo importante */
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #777777;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Lo que escribe el usuario va mas grande que la etiqueta para que destaque */
+.campo input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    font-size: 20px;
+    color: #222222;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+/* Al escribir en un campo, el borde se pone morado para saber donde estas */
+.campo input:focus {
+    outline: none;
+    border-color: #777bb4;
+    box-shadow: 0 0 0 2px rgba(119, 123, 180, 0.25);
+}
