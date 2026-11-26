@@ -11,7 +11,7 @@ if (!isset($_COOKIE['idioma'])) {
     // 60 segundos * 60 minutos * 24 horas * 7 dias = una semana en segundos
     setcookie('idioma', 'ES', time() + 60 * 60 * 24 * 7);
     // se actualiza la $_COOKIE para poder utilizarla en la misma peticion
-    $_COOKIE['idioma'] = 'ES';
+    header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 if (isset($_REQUEST['login'])) {
